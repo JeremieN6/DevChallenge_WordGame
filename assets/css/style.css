@@ -1,0 +1,178 @@
+@import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Outfit:wght@100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto+Flex:opsz,wght@8..144,100..1000&display=swap');
+
+    :root {
+        --font-size-letter: 2rem;
+        --font-size-medium: 1.25rem;
+        --font-size-small: .75rem;
+        --font-size-button-text: .875rem;
+
+        --black-color: #030616;
+        --dark-grey-color: #4A5567;
+        --light-grey-color: #97A3B6;
+        --white-custom-color: #F2F5F9;
+        --purple-color: #7429C6;
+        --light-purple-color: #C951E7;
+        --dark-purple-color: #672171;
+
+        --font-weight-bold: bold;
+        --font-weight-semi-bold: 600;
+        --font-weight-regular: 400;
+    }
+
+    * {
+        font-family: "Outfit", serif;
+    }
+
+    body {
+        background-image: url(../images/bg-guess-the-word.png);
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+    }
+
+    .container_gaming_bloc {
+        position: relative;
+        height: 97vh;
+    }
+
+    .content_gaming_bloc {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .gaming_bloc {
+        /* width: 100%; */
+        /* width: 340px; */
+        padding: 20px;
+        /* padding: 0 0 20px; */
+        /* height: 500px; */
+        border-radius: 15px;
+        background-color: #1E2037;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .containerTitle{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .contentRandomletter{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 15px;
+        width: 330px;
+        height: 65px;
+        padding: 0 15px;
+        background-color: var(--dark-grey-color);
+        border-radius: 15px;
+    }
+    .letter{
+        color: var(--light-grey-color);
+        font-size: var(--font-size-letter);
+        font-weight: var(--font-weight-regular);
+    }
+    span.labelTries {
+        color: var(--dark-grey-color);
+    }
+    .contentTries{
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    } 
+    .countTries {
+        display: flex;
+        gap: 3px;
+    }
+    .iconTries{
+        display: flex;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+    }
+    .iconTriesFull{
+        background-color: var(--purple-color);
+    }
+
+    .iconTriesEmpty{
+        background-color: var(--light-grey-color);
+    }
+
+    .contentGamingInfo{
+        display: flex;
+        justify-content: space-between;
+        width: 310px;
+    }
+
+    .contentMistakes {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+    .labelMistake{
+        color: var(--dark-grey-color);
+    }
+    .containerSingleCover {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 10px;
+    }
+    .mistakes{
+        color: var(--white-custom-color);
+    }
+ 
+    .contentLetterInputs{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        flex-direction: row;
+        gap: 10px;
+    }
+    .letterInput{
+        border-radius: 15px;
+        width: 40px;
+        height: 40px;
+        background-color: transparent;
+        border: 1px solid var(--dark-grey-color);
+        color: var(--white-custom-color);
+        
+        font-size: var(--font-size-letter);
+        text-align: center;
+    }
+    textarea:focus, .letterInput:focus-visible{
+        outline: 3px solid var(--purple-color);
+    }
+
+    .containerButtons{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .btnRandom, .btnReset{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100px;
+        height: 10px;
+        background-color: var(--light-purple-color);
+        color: var(--white-custom-color);
+        padding: 20px;
+        border-radius: 15px;
+        box-shadow: 0px 6px 0px var(--dark-purple-color);
+        cursor: pointer;
+    }
+
+    .validationMessage{
+        color: var(--white-custom-color);
+    }

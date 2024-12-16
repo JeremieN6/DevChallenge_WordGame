@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.cdnfonts.com/css/inter" rel="stylesheet">
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <title>Vue.js Word Scramble Game</title>
+</head>
+
+<body>
+    <div id="app">
+        <div class="container_gaming_bloc">
+            <div class="content_gaming_bloc">
+                <div class="gaming_bloc">
+                    <!-- Titre du bloc -->
+                    <div class="containerTitle">
+                        <img src="./assets/images/Word Scramblle.svg" alt="" class="imgTitle">
+                    </div>
+                    <!-- Bloc Random Letter -->
+                    <div class="containerRandomletter">
+                        <div class="contentRandomletter">
+                            <span v-for="(letter, index) in scrambledWord.split('')" :key="index" class="letter">{{
+                                letter }}</span>
+                        </div>
+                    </div>
+                    <!-- Bloc Gaming Informations -->
+                    <div class="containerGamingInfo">
+                        <div class="contentGamingInfo">
+                            <div class="containerTries">
+                                <div class="contentTries">
+                                    <span class="labelTries">Tries ({{ triesLeft }} / 5) :</span>
+                                    <div class="countTries">
+                                        <span v-for="(tryIcon, index) in tries" :key="index" :class="tryIcon"
+                                            class="iconTries"></span>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="containerMistakes">
+                                <div class="contentMistakes">
+                                    <div class="labelMistake">Mistakes :</div>
+                                    <span class="mistakes">{{ mistakes.join(', ') }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Bloc Input letters -->
+                    <div class="containerLetterInputs">
+                        <div class="contentLetterInputs">
+                            <input v-for="(letter, index) in userInputs" :key="index" :ref="'input' + index"
+                                v-model="userInputs[index]" type="text" maxlength="1" @input="handleUserInput"
+                                @keydown="handleBackspace(index, $event)" class="letterInput" />
+                        </div>
+                    </div>
+                    <!-- Buttons -->
+                    <div class="containerButtons">
+                        <div class="btnRandom" @click="startGame">Random</div>
+                        <div class="btnReset" id="reset" @click="resetGame">Reset</div>
+                    </div>
+                    <!-- Message de validation -->
+                    <p v-if="isCorrect !== null" class="validationMessage">
+                        {{ isCorrect ? '✅ Correct! 🎉' : '❌ Try Again 😢' }}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script type="text/javascript">
+        var app = new Vue({
+            el: '#app',
+            data: {
+                words: ["apple",
+                    "banana",
+                    "cherry",
+                    "grape",
+                    "orange",
+                    "peach",
+                    "pear",
+                    "plum",
+                    "kiwi",
+                    "mango",
+                    "elephant",
+                    "tiger",
+                    "giraffe",
+                    "dolphin",
+                    "whale",
+                    "penguin",
+                    "kangaroo",
+                    "zebra",
+                    "panda",
+                    "monkey",
+                    "mountain",
+                    "river",
+                    "ocean",
+                    "forest",
+                    "desert",
+                    "volcano",
+                    "canyon",
+                    "island",
+                    "valley",
+                    "waterfall",
+                    "computer",
+                    "laptop",
+                    "keyboard",
+                    "mouse",
+                    "monitor",
+                    "internet",
+                    "browser",
+                    "server",
+                    "database",
+                    "cloud",
+                    "freedom",
+                    "journey",
+                    "mystery",
+                    "adventure",
+                    "dream",
+                    "harmony",
+                    "wisdom",
+                    "courage",
+                    "victory",
+                    "destiny",
+                    "soccer",
+                    "cricket",
+                    "tennis",
+                    "badminton",
+                    "hockey",
+                    "baseball",
+                    "basketball",
+                    "football",
+                    "volleyball",
+                    "rugby",
+                    "violet",
+                    "indigo",
+                    "blue",
+                    "green",
+                    "yellow",
+                    "orange",
+                    "red",
+                    "magenta",
+                    "cyan",
+                    "white",
+                    "Monday",
+                    "Tuesday",
+                    "Wednesday",
+                    "Thursday",
+                    "Friday",
+                    "Saturday",
+                    "Sunday",
+                    "circle",
+                    "square",
+                    "triangle",
+                    "rectangle",
+                    "hexagon",
+                    "octagon",
+                    "polygon",
+                    "ellipse",
+                    "cube",
+                    "sphere"], // Liste des mots
+                selectedWord: '', // Mot sélectionné aléatoirement
+                scrambledWord: '', // Mot mélangé
+                userInputs: [], // Lettres saisies par l'utilisateur
+                isCorrect: null, // État de validation (null, true, false)
+                triesLeft: 5,
+                mistakes: [],
+                tries: ['iconTriesEmpty', 'iconTriesEmpty', 'iconTriesEmpty', 'iconTriesEmpty', 'iconTriesEmpty'],
+            },
+            methods: {
+                startGame() {
+                    this.isCorrect = null; // Réinitialiser le message
+                    this.selectedWord = this.getRandomWord();
+                    this.scrambledWord = this.shuffleWord(this.selectedWord);
+                    this.userInputs = Array(this.selectedWord.length).fill('');
+                    this.triesLeft = 5;
+                    this.mistakes = [];
+                    this.tries = ['iconTriesEmpty', 'iconTriesEmpty', 'iconTriesEmpty', 'iconTriesEmpty', 'iconTriesEmpty'];
+                },
+                resetGame() {
+                    this.startGame();
+                },
+                getRandomWord() {
+                    const randomIndex = Math.floor(Math.random() * this.words.length);
+                    return this.words[randomIndex];
+                },
+                shuffleWord(word) {
+                    return word
+                        .split('')
+                        .sort(() => Math.random() - 0.5)
+                        .join('');
+                },
+                checkAnswer() {
+                    const userWord = this.userInputs.join('');
+                    this.isCorrect = userWord === this.selectedWord;
+                    if (this.isCorrect) {
+                        this.triesLeft = 0;
+                    }
+                },
+                handleUserInput() {
+                    let errorMade = false;
+
+                    // Vérifier si l'utilisateur a fait une erreur
+                    this.userInputs.forEach((letter, index) => {
+                        if (this.selectedWord[index] !== letter && !this.mistakes.includes(letter) && letter !== '') {
+                            this.mistakes.push(letter);
+                            errorMade = true;
+                        }
+                    });
+
+                    if (errorMade && this.triesLeft > 0) {
+                        this.triesLeft--;
+                        this.tries[5 - this.triesLeft - 1] = 'iconTriesFull'; // Met à jour l'icône
+                    }
+
+                    if (this.userInputs.every(input => input !== '')) {
+                        this.checkAnswer();
+                    }
+
+                    if (this.triesLeft === 0 && !this.isCorrect) {
+                        this.isCorrect = false;
+                    }
+
+                    // Mettre le focus sur le prochain champ vide
+                    this.$nextTick(() => {
+                        const currentEmptyIndex = this.userInputs.findIndex(input => input === ''); // Trouve le premier champ vide
+                        if (currentEmptyIndex !== -1) {
+                            const nextInput = this.$refs[`input${currentEmptyIndex}`]; // Récupère l'input suivant via son ref
+                            if (nextInput && nextInput[0]) {
+                                // Vue renvoie un tableau de refs avec `v-for`, donc utilise `nextInput[0]`
+                                nextInput[0].focus();
+                            }
+                        }
+                    });
+                },
+
+                handleBackspace(index, event) {
+                    if (event.key === 'Backspace') {
+                        // Si l'input actuel est vide et qu'il y a un input précédent
+                        if (!this.userInputs[index] && index > 0) {
+                            const prevInput = this.$refs[`input${index - 1}`][0]; // Récupère l'input précédent
+                            if (prevInput) {
+                                this.userInputs[index - 1] = ''; // Efface l'input précédent
+                                prevInput.focus(); // Déplace le focus
+                            }
+                        } else if (this.userInputs[index]) {
+                            // Si l'input actuel a une lettre, on l'efface sans changer le focus
+                            this.userInputs[index] = '';
+                        }
+                    }
+                },
+
+            },
+            mounted() {
+                this.startGame();
+            }
+        });
+    </script>
+</body>
+
+</html>
