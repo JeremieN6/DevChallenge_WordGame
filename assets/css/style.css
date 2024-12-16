@@ -176,3 +176,29 @@
     .validationMessage{
         color: var(--white-custom-color);
     }
+    @media screen and (max-width: 349px){
+        .gaming_bloc{
+            width: 240px;
+        }
+        .contentRandomletter{
+            width: 200px;
+        }
+        .btnRandom, .btnReset{
+            width: 70px;
+        }
+        .contentGamingInfo {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+    }
+
+    @media (min-width: 350px) and (max-width: 410px){
+        .gaming_bloc{
+            width: 300px;
+        }
+        .contentRandomletter{
+            width: 280px;
+        }
+    }
+    
